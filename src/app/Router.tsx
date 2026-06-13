@@ -45,11 +45,6 @@ export const AppRouter: React.FC = () => {
           </ProtectedRoute>
         } />
         
-        <Route path="/console/advisory" element={
-          <ProtectedRoute>
-            <AdvisoryPage />
-          </ProtectedRoute>
-        } />
         
         <Route path="/console/forecast" element={
           <ProtectedRoute>
