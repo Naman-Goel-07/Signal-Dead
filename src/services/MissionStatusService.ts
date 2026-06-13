@@ -66,9 +66,9 @@ export class MissionStatusService {
 				advisories, // Injected directly into the status payload
 				// Inject the raw telemetry data here so the TelemetryPage can read it
 				telemetry: {
-					kpIndex: telemetryRes.data?.kpIndex || 2.0,
-					satellitesOverhead: telemetryRes.data?.satellitesOverhead || 0,
-					pdop: telemetryRes.data?.pdop || 99.9,
+					kpIndex: telemetryRes.data?.kpIndex ?? 2.0,
+					satellitesOverhead: telemetryRes.data?.satellitesOverhead ?? 0,
+					pdop: telemetryRes.data?.pdop ?? 99.9,
 				},
 				activeAlerts:
 					kp > 4
