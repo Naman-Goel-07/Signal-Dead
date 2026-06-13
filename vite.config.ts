@@ -14,4 +14,8 @@ export default defineConfig({
 	build: {
 		target: 'esnext',
 	},
+	// Force web workers to compile as modern ES modules, bypassing the 'iife' error
+	worker: {
+		format: 'es',
+	},
 })
