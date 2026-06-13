@@ -29,7 +29,7 @@ export default defineConfig({
 			'/api/celestrak': {
 				target: 'https://celestrak.org',
 				changeOrigin: true,
-				rewrite: () => '/NORAD/elements/gp.php?GROUP=gps&FORMAT=tle',
+				rewrite: () => '/NORAD/elements/gp.php?GROUP=gps-ops&FORMAT=tle',
 			},
 		},
 	},
