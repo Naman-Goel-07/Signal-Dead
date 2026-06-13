@@ -16,7 +16,7 @@ const CherryBlossomLayer: React.FC = () => {
   }, []);
 
   return (
-    <div className="fixed inset-0 pointer-events-none overflow-hidden z-[5]">
+    <div className="fixed inset-0 pointer-events-none overflow-hidden z-[2]">
       {petals.map((petal) => (
         <motion.div
           key={petal.id}

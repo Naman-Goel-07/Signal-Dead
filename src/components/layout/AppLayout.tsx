@@ -30,7 +30,7 @@ export const AppLayout: React.FC<{ children: React.ReactNode }> = ({ children })
           animate={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
           exit={{ opacity: 0, y: -20, filter: 'blur(4px)' }}
           transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
-          className={`relative z-10 w-full h-full min-h-screen flex flex-col ${isConsole ? 'pt-20' : ''}`}
+          className={`relative w-full h-full min-h-screen flex flex-col ${isConsole ? 'pt-20' : ''}`}
         >
           {children}
         </motion.main>
