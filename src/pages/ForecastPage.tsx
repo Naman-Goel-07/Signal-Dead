@@ -96,7 +96,7 @@ export const ForecastPage: React.FC = () => {
 										contentStyle={{ backgroundColor: '#08080A', border: '1px solid #2D2E32', borderRadius: '0px' }}
 										labelStyle={{ color: '#00E5FF', fontFamily: 'monospace', marginBottom: '8px' }}
 										itemStyle={{ fontFamily: 'monospace' }}
-										formatter={(value: any, name: string, props: any) => [
+										formatter={(value: any, name: any, props: any) => [
 											props.payload.riskState,
 											`EST. KP: ${props.payload.predictedKp}`,
 										]}
