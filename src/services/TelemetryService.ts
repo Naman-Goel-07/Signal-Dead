@@ -86,6 +86,12 @@ export class TelemetryService {
 				}
 			}
 
+			// If the proxy gives us 0 satellites, instantly trigger the catch block below
+			if (visibleSatellites < 4) {
+				console.warn(`[Telemetry] Silent proxy failure. Only ${visibleSatellites} satellites found. Engaging fallback.`)
+				throw new Error('Corrupt TLE data received from proxy')
+			}
+
 			// 4. Calculate dynamic PDOP based on real visible satellites
 			// Adjusted math for GPS-only constellation (~32 total, expecting 6-12 overhead)
 			let calculatedPdop = 99.9
