@@ -18,4 +18,19 @@ export default defineConfig({
 	worker: {
 		format: 'es',
 	},
+	// THIS SERVER BLOCK for local CORS bypass
+	server: {
+		proxy: {
+			'/api/noaa': {
+				target: 'https://services.swpc.noaa.gov',
+				changeOrigin: true,
+				rewrite: () => '/products/noaa-planetary-k-index.json',
+			},
+			'/api/celestrak': {
+				target: 'https://celestrak.org',
+				changeOrigin: true,
+				rewrite: () => '/NORAD/elements/gp.php?GROUP=gps&FORMAT=tle',
+			},
+		},
+	},
 })

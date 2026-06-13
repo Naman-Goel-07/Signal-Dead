@@ -1,6 +1,14 @@
 {
 	"rewrites": [
 		{
+			"source": "/api/noaa",
+			"destination": "https://services.swpc.noaa.gov/products/noaa-planetary-k-index.json"
+		},
+		{
+			"source": "/api/celestrak",
+			"destination": "https://celestrak.org/NORAD/elements/gp.php?GROUP=gps&FORMAT=tle"
+		},
+		{
 			"source": "/(.*)",
 			"destination": "/index.html"
 		}
