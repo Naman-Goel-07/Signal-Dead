@@ -3,12 +3,16 @@ import { useNavigate } from 'react-router-dom'
 import { motion } from 'framer-motion'
 import { MissionHeroScene } from '@/features/landing/MissionHeroScene'
 import { useLocation } from '@/hooks/useLocation'
+import { useLocationStore } from '@/store/locationStore'
 import { LoadingSpinner } from '@/components/ui/LoadingSpinner'
 import { Crosshair } from 'lucide-react'
 
 export const LandingPage: React.FC = () => {
 	const navigate = useNavigate()
 	const { location, loading, error, autoDetectLocation, searchLocation, selectManualLocation } = useLocation()
+
+	// Grab the clear function from global store
+	const { clearLocation } = useLocationStore()
 
 	const [searchQuery, setSearchQuery] = useState('')
 	const [searchResults, setSearchResults] = useState<any[]>([])
@@ -34,6 +38,14 @@ export const LandingPage: React.FC = () => {
 		if (location) {
 			navigate('/console')
 		}
+	}
+
+	// Function to abort the target lock and try a new location
+	const handleResetTarget = () => {
+		clearLocation()
+		setSearchQuery('')
+		setSearchResults([])
+		setManualMode(false)
 	}
 
 	return (
@@ -143,7 +155,7 @@ export const LandingPage: React.FC = () => {
 									</div>
 
 									{searchResults.length > 0 && (
-										<div className="max-h-40 overflow-y-auto bg-surface-2 border border-border-dim mt-2 shadow-card">
+										<div className="max-h-40 overflow-y-auto bg-surface-2 border border-border-dim mt-2 shadow-card custom-scrollbar">
 											{searchResults.map((result, idx) => (
 												<button
 													key={idx}
@@ -166,7 +178,7 @@ export const LandingPage: React.FC = () => {
 							)}
 						</div>
 					) : (
-						<div className="space-y-6">
+						<div className="space-y-4">
 							<div className="flex items-start space-x-3 bg-neon-cyan/5 border border-neon-cyan/20 p-4 rounded-none shadow-glow-cyan">
 								<svg
 									className="w-5 h-5 text-neon-cyan mt-0.5 flex-shrink-0 animate-pulse"
@@ -190,6 +202,14 @@ export const LandingPage: React.FC = () => {
 								className="w-full flex items-center justify-center space-x-2 bg-neon-cyan text-surface-0 hover:bg-white border border-neon-cyan py-4 px-4 rounded-none transition-all duration-300 font-mono tracking-[0.2em] font-bold text-sm shadow-glow-cyan"
 							>
 								INITIALIZE MISSION CONSOLE
+							</button>
+
+							{/* Abort/Recalibrate Button */}
+							<button
+								onClick={handleResetTarget}
+								className="w-full text-center text-xs font-mono tracking-widest text-white/40 hover:text-crimson transition-colors py-2 border border-transparent hover:border-crimson/30 bg-transparent"
+							>
+								ABORT TARGET LOCK
 							</button>
 						</div>
 					)}
