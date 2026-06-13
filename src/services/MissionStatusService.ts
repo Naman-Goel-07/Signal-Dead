@@ -54,13 +54,18 @@ export class MissionStatusService {
 
 			const riskScore = Math.min(100, Math.round(kp * 11.1))
 
+			// DYNAMIC RELIABILITY LOGIC
+			const telemetry = telemetryRes.data
+			const localVisibility = Math.min(1.0, (telemetry.satellitesOverhead ?? 0) / 10)
+			const reliabilityLevel = Math.round(Math.max(10, (100 - kp * 10) * localVisibility))
+
 			const data: MissionStatus = {
 				id: `miss_${Date.now()}`,
 				timestamp,
 				riskScore,
 				riskState,
 				missionReadiness: readiness,
-				reliabilityLevel: Math.max(10, 100 - kp * 10),
+				reliabilityLevel: reliabilityLevel,
 				estimatedAccuracy: kp > 5 ? 25.0 : 4.0,
 				location,
 				advisories, // Injected directly into the status payload

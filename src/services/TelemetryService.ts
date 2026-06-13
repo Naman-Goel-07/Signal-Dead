@@ -8,7 +8,7 @@ const NOAA_KP_URL = '/api/noaa'
 let cachedTleText: string | null = null
 let cachedKpData: any = null
 let lastFetchTime = 0
-const CACHE_DURATION = 0 // Cache data for 15 minutes
+const CACHE_DURATION = 15 * 60 * 1000 // Cache data for 15 minutes
 
 export class TelemetryService {
 	static async getTelemetry(location: Location): Promise<ApiResponse<TelemetrySnapshot>> {
