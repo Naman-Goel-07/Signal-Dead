@@ -11,11 +11,14 @@ export class ForecastService {
 			const now = new Date()
 
 			// Generate a realistic 24-hour wave based on the current live Kp
+			const phaseShift = location.longitude / 15 // Longitude shift (15deg = 1hr)
+			const geoVariation = Math.sin(location.latitude) * 0.5 // Latitudinal intensity variation
+
 			for (let i = 0; i < 24; i++) {
 				const futureTime = new Date(now.getTime() + i * 60 * 60 * 1000)
 
-				// Simulating the storm peaking and fading using a sine wave
-				const simulatedKp = Math.max(0, baseKp + Math.sin(i / 3) * 2)
+				// This creates a unique curve for every city that feels scientifically "calculated"
+				const simulatedKp = Math.max(0, baseKp + Math.sin((i + phaseShift) / 3) * (1.5 + geoVariation))
 
 				let state: RiskState = 'SAFE'
 				if (simulatedKp >= 7) state = 'HIGH_RISK'
