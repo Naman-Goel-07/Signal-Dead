@@ -50,26 +50,6 @@ export const ConsolePage: React.FC = () => {
 
   return (
     <div className="min-h-screen p-6 md:p-12 max-w-7xl mx-auto w-full flex flex-col">
-      {/* Location Strip */}
-      <motion.div 
-        initial={{ opacity: 0, y: -20 }}
-        animate={{ opacity: 1, y: 0 }}
-        className="flex items-center justify-between border-b border-border-dim pb-4 mb-8"
-      >
-        <div className="flex items-center space-x-3">
-          <div className="w-2 h-2 rounded-full bg-neon-cyan animate-pulse" />
-          <h2 className="font-heading text-sm md:text-base font-bold tracking-widest text-white/80 uppercase">
-            MISSION CONSOLE
-          </h2>
-        </div>
-        <div className="text-right">
-          <p className="font-heading text-xs tracking-widest text-neon-cyan uppercase">Active Target</p>
-          <p className="text-sm font-mono text-white/60 truncate max-w-[200px] md:max-w-xs">
-            {location?.locationName || 'UNKNOWN'}
-          </p>
-        </div>
-      </motion.div>
-
       <div className="flex-1 flex flex-col justify-center">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           <NavCard

@@ -2,11 +2,9 @@ import React, { Suspense, useState, useEffect } from 'react';
 import Spline from '@splinetool/react-spline';
 
 export const MissionHeroScene: React.FC = () => {
-  const [splineUrl] = useState(import.meta.env.VITE_SPLINE_SCENE_URL || '');
+  const splineUrl = 'https://prod.spline.design/zHVDSXFokuOKZOVF/scene.splinecode';
   const [isLoading, setIsLoading] = useState(true);
   const [hasError, setHasError] = useState(false);
-
-  // Generate random stars for fallback
   const stars = Array.from({ length: 100 }).map((_, i) => ({
     id: i,
     left: `${Math.random() * 100}%`,
@@ -51,8 +49,8 @@ export const MissionHeroScene: React.FC = () => {
   );
 
   return (
-    <div className="absolute inset-0 w-full h-full pointer-events-none">
-      {!splineUrl || hasError ? (
+    <div className="absolute inset-0 w-full h-full pointer-events-none z-[1]">
+      {hasError ? (
         <FallbackScene />
       ) : (
         <Suspense fallback={<FallbackScene />}>
