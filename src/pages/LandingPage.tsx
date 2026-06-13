@@ -27,7 +27,7 @@ export const LandingPage: React.FC = () => {
 	const handleSelectResult = (result: any) => {
 		selectManualLocation(result)
 		setSearchResults([])
-		setQuery('')
+		setSearchQuery('')
 	}
 
 	const handleInitMission = () => {

@@ -51,6 +51,12 @@ export class TelemetryService {
 
 					// Propagate satellite position to current time
 					const positionAndVelocity = satellite.propagate(satrec, now)
+
+					// Ensure positionAndVelocity and position actually exist before proceeding
+					if (!positionAndVelocity || !positionAndVelocity.position) {
+						continue
+					}
+
 					const positionEci = positionAndVelocity.position
 
 					if (typeof positionEci !== 'boolean' && positionEci) {

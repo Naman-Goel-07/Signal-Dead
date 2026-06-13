@@ -77,6 +77,12 @@ export interface MissionStatus {
 	location: Location
 	activeAlerts: Alert[]
 	advisories: AdvisoryCard[]
+	/** Live telemetry injected from the orbital scan */
+	telemetry?: {
+		kpIndex: number
+		satellitesOverhead: number
+		pdop: number
+	}
 }
 
 // ── Advisory ───────────────────────────────────────────────────────
