@@ -8,7 +8,6 @@ import { LandingPage } from '@/pages/LandingPage';
 import { ConsolePage } from '@/pages/ConsolePage';
 import { MissionStatusPage } from '@/pages/MissionStatusPage';
 import { TelemetryPage } from '@/pages/TelemetryPage';
-import { AdvisoryPage } from '@/pages/AdvisoryPage';
 import { ForecastPage } from '@/pages/ForecastPage';
 
 const ProtectedRoute = ({ children }: { children: React.ReactNode }) => {

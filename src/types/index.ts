@@ -63,19 +63,20 @@ export interface ForecastWindow {
 
 // ── Mission Status ─────────────────────────────────────────────────
 export interface MissionStatus {
-  id: string;
-  timestamp: string;
-  /** 0–100 composite risk score */
-  riskScore: number | null;
-  riskState: RiskState;
-  /** e.g. "GO", "NO-GO", "CAUTION" */
-  missionReadiness: string | null;
-  /** Reliability percentage */
-  reliabilityLevel: number | null;
-  /** Estimated positional accuracy in metres */
-  estimatedAccuracy: number | null;
-  location: Location;
-  activeAlerts: Alert[];
+	id: string
+	timestamp: string
+	/** 0–100 composite risk score */
+	riskScore: number | null
+	riskState: RiskState
+	/** e.g. "GO", "NO-GO", "CAUTION" */
+	missionReadiness: string | null
+	/** Reliability percentage */
+	reliabilityLevel: number | null
+	/** Estimated positional accuracy in metres */
+	estimatedAccuracy: number | null
+	location: Location
+	activeAlerts: Alert[]
+	advisories: AdvisoryCard[]
 }
 
 // ── Advisory ───────────────────────────────────────────────────────

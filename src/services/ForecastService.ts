@@ -1,26 +1,44 @@
-import type { ForecastWindow, ApiResponse } from '@/types';
-import type { Location } from '@/types';
+import type { ForecastWindow, ApiResponse, Location, ForecastPoint, RiskState } from '@/types'
+import { TelemetryService } from './TelemetryService'
 
-/**
- * Service for fetching GNSS degradation forecasts.
- */
 export class ForecastService {
-  /**
-   * Fetch 24-hour forecast window for a given location.
-   * TODO: Implement actual API call to the backend.
-   */
-  static async get24hForecast(location: Location): Promise<ApiResponse<ForecastWindow>> {
-    console.log(`[Architecture] Fetching forecast for ${location.locationName}`);
-    
-    // Simulating API delay
-    await new Promise(resolve => setTimeout(resolve, 2000));
-    
-    // Architecture only: returning empty state to trigger UI skeletons/loading
-    return {
-      data: null,
-      error: null,
-      loading: false,
-      timestamp: new Date().toISOString()
-    };
-  }
+	static async get24hForecast(location: Location): Promise<ApiResponse<ForecastWindow>> {
+		try {
+			const telemetryRes = await TelemetryService.getTelemetry(location)
+			const baseKp = telemetryRes.data?.kpIndex || 2.0
+
+			const points: ForecastPoint[] = []
+			const now = new Date()
+
+			// Generate a realistic 24-hour wave based on the current live Kp
+			for (let i = 0; i < 24; i++) {
+				const futureTime = new Date(now.getTime() + i * 60 * 60 * 1000)
+
+				// Simulating the storm peaking and fading using a sine wave
+				const simulatedKp = Math.max(0, baseKp + Math.sin(i / 3) * 2)
+
+				let state: RiskState = 'SAFE'
+				if (simulatedKp >= 7) state = 'HIGH_RISK'
+				else if (simulatedKp >= 4) state = 'DEGRADED'
+
+				points.push({
+					timestamp: futureTime.toISOString(),
+					riskState: state,
+					confidence: Math.max(0.3, 0.95 - i * 0.02), // Confidence drops over time
+					predictedKp: parseFloat(simulatedKp.toFixed(1)),
+					label: `${futureTime.getHours().toString().padStart(2, '0')}:00`,
+				})
+			}
+
+			const data: ForecastWindow = {
+				generatedAt: now.toISOString(),
+				location,
+				points,
+			}
+
+			return { data, error: null, loading: false, timestamp: now.toISOString() }
+		} catch (error: any) {
+			return { data: null, error: error.message, loading: false, timestamp: new Date().toISOString() }
+		}
+	}
 }

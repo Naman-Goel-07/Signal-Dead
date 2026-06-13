@@ -20,10 +20,5 @@ export const SkeletonLoader: React.FC<SkeletonLoaderProps> = ({
     full: 'rounded-full',
   }[rounded];
 
-  return (
-    <div 
-      className={`skeleton ${width} ${height} ${roundedClass} ${className}`}
-      aria-hidden="true"
-    />
-  );
+  return <div className={`bg-surface-2 animate-pulse border border-border-dim ${width} ${height} ${roundedClass} ${className}`} aria-hidden="true" />
 };
