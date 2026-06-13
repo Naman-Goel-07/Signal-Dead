@@ -27,7 +27,10 @@ export class TelemetryService {
 				console.log('[Telemetry] Serving orbital data from fast local cache.')
 				tleText = cachedTleText!
 				const latestRow = cachedKpData[cachedKpData.length - 1]
-				liveKp = latestRow ? parseFloat(latestRow[1]) : 2.0
+
+				// Access the 'Kp' property directly from the object
+				// Use ?? to provide a fallback if the data is missing or NaN
+				liveKp = latestRow && typeof latestRow.Kp === 'number' ? latestRow.Kp : 2.0
 			} else {
 				console.log('[Telemetry] Cache expired or empty. Firing network requests directly to local proxy...')
 
@@ -42,7 +45,9 @@ export class TelemetryService {
 
 				tleText = cachedTleText
 				const latestRow = cachedKpData[cachedKpData.length - 1]
-				liveKp = latestRow ? parseFloat(latestRow[1]) : 2.0
+				// Access the 'Kp' property directly from the object
+				// Use ?? to provide a fallback if the data is missing or NaN
+				liveKp = latestRow && typeof latestRow.Kp === 'number' ? latestRow.Kp : 2.0
 			}
 
 			// 3. Calculate Satellites Overhead using satellite.js
