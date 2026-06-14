@@ -6,6 +6,8 @@ import { useLocation } from '@/hooks/useLocation'
 import { useLocationStore } from '@/store/locationStore'
 import { LoadingSpinner } from '@/components/ui/LoadingSpinner'
 import { Crosshair } from 'lucide-react'
+import sdLogo from '@/assets/logo.png'
+
 
 export const LandingPage: React.FC = () => {
 	const navigate = useNavigate()
@@ -62,7 +64,11 @@ export const LandingPage: React.FC = () => {
 					{/* Synchronized Logo */}
 					<div className="flex items-center gap-3 mb-4">
 						<div className="w-10 h-10 border border-crimson flex items-center justify-center bg-crimson/10 shadow-glow-crimson">
-							<span className="text-crimson font-mono text-lg font-bold">SD</span>
+							<img
+								src={sdLogo}
+								alt="SD Logo"
+								className="h-6 w-auto opacity-90 hover:opacity-100 transition-opacity duration-300 drop-shadow-[0_0_8px_rgba(230,57,70,0.5)]"
+							/>
 						</div>
 						<h1 className="font-heading text-4xl md:text-5xl font-bold tracking-[0.2em] text-white uppercase">
 							SIGNAL<span className="text-crimson">DEAD</span>

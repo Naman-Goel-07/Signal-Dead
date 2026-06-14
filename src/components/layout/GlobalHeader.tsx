@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import { useNavigate, Link } from 'react-router-dom'
 import { Search, MapPin, Loader2 } from 'lucide-react'
 import { useLocation } from '@/hooks/useLocation'
+import sdLogo from '@/assets/logo.png'
 
 export const GlobalHeader: React.FC = () => {
 	const [query, setQuery] = useState('')
@@ -41,7 +42,11 @@ export const GlobalHeader: React.FC = () => {
 				{/* Clickable Branding routed to Landing Page */}
 				<Link to="/" className="flex items-center gap-3 w-full md:w-auto group hover:opacity-80 transition-opacity">
 					<div className="w-8 h-8 border border-crimson flex items-center justify-center bg-crimson/10 shadow-glow-crimson group-hover:bg-crimson/20 transition-colors">
-						<span className="text-crimson font-mono text-xs font-bold">SD</span>
+						<img
+							src={sdLogo}
+							alt="SD Logo"
+							className="h-6 w-auto opacity-90 hover:opacity-100 transition-opacity duration-300 drop-shadow-[0_0_8px_rgba(230,57,70,0.5)]"
+						/>
 					</div>
 					<div>
 						<h1 className="text-lg font-heading font-bold tracking-[0.2em] text-white uppercase">
