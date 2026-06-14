@@ -32,7 +32,7 @@ export const GlobalHeader: React.FC = () => {
 		await selectManualLocation(result)
 		setSearchResults([])
 		setQuery('')
-		navigate('/console/status')
+		navigate('/console')
 	}
 
 	return (

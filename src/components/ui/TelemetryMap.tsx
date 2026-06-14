@@ -72,10 +72,8 @@ export const TelemetryMap: React.FC = () => {
 			<MapContainer
 				center={[lat, lng]}
 				zoom={11}
-				zoomControl={false} // Hide default buttons for cleaner HUD
+				zoomControl={true}
 				className="w-full h-full z-0"
-				dragging={false} // Lock the map for a true "console" feel
-				scrollWheelZoom={false}
 			>
 				<MapController lat={lat} lng={lng} />
 
