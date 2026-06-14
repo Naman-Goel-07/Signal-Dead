@@ -1,5 +1,6 @@
 import React, { useEffect, useRef } from 'react'
-import { MapContainer, TileLayer, Circle, Marker, useMap, ZoomControl } from 'react-leaflet' 
+import { MapContainer, TileLayer, Circle, Marker, useMap, ZoomControl, useMapEvents } from 'react-leaflet'
+import { useLocationStore } from '@/store/locationStore'
 import L from 'leaflet'
 import 'leaflet/dist/leaflet.css'
 import { useMissionStore } from '@/store/missionStore'
@@ -14,6 +15,34 @@ const MapController: React.FC<{ lat: number; lng: number }> = ({ lat, lng }) => 
 			duration: 1.5,
 		})
 	}, [lat, lng, map])
+	return null
+}
+
+// ── Tactical Map Click Handler ─────────────────────────────────
+const MapClickHandler: React.FC = () => {
+	const { setLocation } = useLocationStore()
+	const { launchOrbitalScan } = useMissionStore()
+
+	useMapEvents({
+		click: (e) => {
+			const lat = e.latlng.lat
+			const lng = e.latlng.lng
+
+			// Create a custom location object based on the click
+			const newTarget = {
+				latitude: lat,
+				longitude: lng,
+				locationName: `COORD: ${lat.toFixed(4)}, ${lng.toFixed(4)}`,
+			}
+
+			// 1. Update the global location store
+			setLocation(newTarget)
+
+			// 2. Instantly fire the telemetry uplink for the new coordinates
+			launchOrbitalScan(newTarget)
+		},
+	})
+
 	return null
 }
 
@@ -35,7 +64,7 @@ const createCrosshairIcon = (colorHex: string) => {
 
 export const TelemetryMap: React.FC = () => {
 	const { missionData, isLoading } = useMissionStore()
-	const mapRef = useRef<L.Map | null>(null) 
+	const mapRef = useRef<L.Map | null>(null)
 
 	const lat = missionData?.location.latitude ?? 0
 	const lng = missionData?.location.longitude ?? 0
@@ -77,16 +106,11 @@ export const TelemetryMap: React.FC = () => {
 				</button>
 			</div>
 
-			<MapContainer
-				ref={mapRef}
-				center={[lat, lng]}
-				zoom={11}
-				zoomControl={false}
-				className="w-full h-full z-0"
-			>
+			<MapContainer ref={mapRef} center={[lat, lng]} zoom={11} zoomControl={false} className="w-full h-full z-0 cursor-crosshair">
 				<ZoomControl position="bottomright" />
 
 				<MapController lat={lat} lng={lng} />
+				<MapClickHandler />
 
 				<TileLayer attribution='&copy; <a href="https://carto.com/">CartoDB</a>' url="https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png" />
 
