@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom'
 import { motion } from 'framer-motion'
 import { useLocationStore } from '@/store/locationStore'
 import { ShieldAlert, Activity, BarChart2 } from 'lucide-react'
+import { TelemetryMap } from '@/components/ui/TelemetryMap'
 
 interface NavCardProps {
 	title: string
@@ -47,38 +48,51 @@ export const ConsolePage: React.FC = () => {
 	const { location } = useLocationStore()
 
 	return (
-		<div className="min-h-screen p-6 md:p-12 max-w-6xl mx-auto w-full flex flex-col">
-			<div className="flex-1 flex flex-col justify-center">
-				<header className="mb-12 border-b border-border-dim pb-6">
-					<h1 className="font-heading text-3xl font-bold tracking-wider text-white uppercase flex items-center">
-						<span className="w-3 h-3 bg-neon-cyan mr-4 hidden md:block animate-pulse"></span>
-						Mission Control
-					</h1>
-					<p className="font-mono text-xs text-white/50 mt-2 tracking-widest uppercase">
-						ACTIVE TARGET: <span className="text-neon-cyan">{location?.locationName || 'UNKNOWN'}</span>
-					</p>
+		<div className="min-h-screen p-6 md:p-12 max-w-7xl mx-auto w-full flex flex-col">
+			<div className="flex-1 flex flex-col justify-start">
+				<header className="mb-8 border-b border-border-dim pb-6 flex justify-between items-end">
+					<div>
+						<h1 className="font-heading text-3xl font-bold tracking-wider text-white uppercase flex items-center">
+							<span className="w-3 h-3 bg-neon-cyan mr-4 hidden md:block animate-pulse"></span>
+							Mission Control
+						</h1>
+						<p className="font-mono text-xs text-white/50 mt-2 tracking-widest uppercase">
+							ACTIVE TARGET: <span className="text-neon-cyan">{location?.locationName || 'UNKNOWN'}</span>
+						</p>
+					</div>
 				</header>
 
+				{/* THE TARGETING RADAR HUD */}
+				<motion.div
+					initial={{ opacity: 0, scale: 0.98, filter: 'blur(10px)' }}
+					animate={{ opacity: 1, scale: 1, filter: 'blur(0px)' }}
+					transition={{ duration: 0.7, ease: 'easeOut' }}
+					className="w-full h-[400px] md:h-[450px] mb-8 relative bg-surface-1 shadow-card"
+				>
+					<TelemetryMap />
+				</motion.div>
+
+				{/* THE CONTROL DECK (Navigation Modules) */}
 				<div className="grid grid-cols-1 md:grid-cols-3 gap-6">
 					<NavCard
 						title="Mission Status"
 						description="Comprehensive overview of readiness, reliability levels, and active operational directives."
 						path="/console/status"
-						delay={0.1}
+						delay={0.2}
 						icon={<ShieldAlert className="w-8 h-8" />}
 					/>
 					<NavCard
 						title="Telemetry"
 						description="Raw real-time GNSS monitoring data including geomagnetic KP index and dilution of precision."
 						path="/console/telemetry"
-						delay={0.2}
+						delay={0.3}
 						icon={<Activity className="w-8 h-8" />}
 					/>
 					<NavCard
 						title="24h Forecast"
 						description="Predictive timeline of expected GNSS degradation over the next 24 hours to aid mission scheduling."
 						path="/console/forecast"
-						delay={0.3}
+						delay={0.4}
 						icon={<BarChart2 className="w-8 h-8" />}
 					/>
 				</div>
